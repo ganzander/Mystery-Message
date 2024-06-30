@@ -5,7 +5,6 @@ const saltRounds = 10;
 
 export async function POST(req) {
   const { name, email, password } = await req.json();
-  console.log(name, password, email);
   if (!name || !email || !password) {
     return Response.json({ Success: false, message: "Missing fields" });
   }
@@ -15,8 +14,16 @@ export async function POST(req) {
   try {
     const userExistsEmail = await User.findOne({ email });
     const userExistsUsername = await User.findOne({ username: name });
-    if (userExistsEmail || userExistsUsername) {
-      return Response.json({ Success: false, message: "User already exists" });
+    if (userExistsUsername) {
+      return Response.json({
+        Success: false,
+        message: "Username already registered",
+      });
+    } else if (userExistsEmail) {
+      return Response.json({
+        Success: false,
+        message: "Email already registered",
+      });
     }
 
     const userSave = new User({
