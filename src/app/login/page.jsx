@@ -18,16 +18,14 @@ export default function Login() {
     if (!email || !password) {
       toast.error("Please fill in the form completely");
     } else {
-      axios
-        .post("http://localhost:3000/api/signin", { email, password })
-        .then((result) => {
-          if (result.data.Success === true) {
-            toast.success(result.data.msg);
-            router.push("/");
-          } else {
-            toast.error(result.data.msg);
-          }
-        });
+      axios.post("/api/signin", { email, password }).then((result) => {
+        if (result.data.Success === true) {
+          toast.success(result.data.msg);
+          router.push("/");
+        } else {
+          toast.error(result.data.msg);
+        }
+      });
 
       setLoginCredentials({
         email: "",

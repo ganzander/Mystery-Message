@@ -32,17 +32,15 @@ export default function LoginViaOTP() {
     if (!email) {
       toast.error("Please fill in the email address");
     } else {
-      axios
-        .post("http://localhost:3000/api/sendOTP", { email })
-        .then((result) => {
-          if (result.data.Success === true) {
-            setLoginViaOTP(false);
-            setEnterOTP(true);
-            toast.success("OTP sent");
-          } else {
-            toast.error("You have not registered yet.\nPlease Register First");
-          }
-        });
+      axios.post("/api/sendOTP", { email }).then((result) => {
+        if (result.data.Success === true) {
+          setLoginViaOTP(false);
+          setEnterOTP(true);
+          toast.success("OTP sent");
+        } else {
+          toast.error("You have not registered yet.\nPlease Register First");
+        }
+      });
     }
   }
 
@@ -53,17 +51,15 @@ export default function LoginViaOTP() {
     if (!email || !otp) {
       toast.error("Please fill in the OTP");
     } else {
-      axios
-        .post("http://localhost:3000/api/checkOTP", { email, otp })
-        .then((result) => {
-          console.log(result);
-          if (result.data.Success === true) {
-            router.push("/");
-            toast.success(result.data.message);
-          } else {
-            toast.error(result.data.message);
-          }
-        });
+      axios.post("/api/checkOTP", { email, otp }).then((result) => {
+        console.log(result);
+        if (result.data.Success === true) {
+          router.push("/");
+          toast.success(result.data.message);
+        } else {
+          toast.error(result.data.message);
+        }
+      });
     }
   }
 

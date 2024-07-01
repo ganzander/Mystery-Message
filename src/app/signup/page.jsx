@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "../../assets/login.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Signup() {
   const router = useRouter();
@@ -13,6 +15,7 @@ export default function Signup() {
     email: "",
     password: "",
   });
+  const [isAvailable, setIsAvailable] = useState(null);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -21,7 +24,7 @@ export default function Signup() {
       toast.error("Please fill in the form completely");
     } else {
       axios
-        .post("http://localhost:3000/api/createuser", {
+        .post("/api/createuser", {
           name,
           email,
           password,
@@ -32,7 +35,7 @@ export default function Signup() {
             toast.success("Successfully registered");
             router.push("/login");
           } else {
-            toast.error("You have already signed up.\nPlease login");
+            toast.error(result.data.message);
           }
         })
         .catch((err) => {
@@ -45,6 +48,22 @@ export default function Signup() {
       });
     }
   }
+
+  useEffect(() => {
+    const { name } = credentials;
+    axios
+      .post("/api/check-username-unique", { name })
+      .then((result) => {
+        if (result.data.Success === true) {
+          setIsAvailable(result.data.Success);
+        } else {
+          setIsAvailable(result.data.Success);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [credentials.name]);
 
   function onChange(event) {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
@@ -74,14 +93,23 @@ export default function Signup() {
           <div className="form-container-right sign-up-container">
             <form onSubmit={handleSubmit} className="login-signup-form">
               <h1 className="text-black text-3xl">Register</h1>
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                onChange={onChange}
-                value={credentials.name}
-                autoComplete="off"
-              />
+              <div className="name-available-container">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  onChange={onChange}
+                  value={credentials.name}
+                  autoComplete="off"
+                />
+                <small>
+                  {isAvailable ? (
+                    <FontAwesomeIcon icon={faCheck} className="icon" />
+                  ) : (
+                    <FontAwesomeIcon icon={faXmark} className="icon" />
+                  )}
+                </small>
+              </div>
 
               <input
                 type="email"
@@ -101,7 +129,13 @@ export default function Signup() {
                 autoComplete="off"
               />
 
-              <button className="login-signup-button " type="submit">
+              <button
+                className={
+                  isAvailable ? "login-signup-button" : "disable-button"
+                }
+                type="submit"
+                disabled={isAvailable ? false : true}
+              >
                 Submit
               </button>
             </form>
