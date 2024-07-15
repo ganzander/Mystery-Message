@@ -20,6 +20,7 @@ export default function Login() {
     } else {
       axios.post("/api/signin", { email, password }).then((result) => {
         if (result.data.Success === true) {
+          localStorage.setItem("AuthToken", result.data.AuthToken);
           toast.success(result.data.msg);
           router.push("/");
         } else {
@@ -69,6 +70,7 @@ export default function Login() {
                 onChange={onChange}
                 autoComplete="off"
               />
+              <small>ganeshmangla2003@gmail.com</small>
 
               <input
                 type="password"

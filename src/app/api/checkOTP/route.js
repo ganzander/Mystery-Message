@@ -1,8 +1,25 @@
 "use server";
 const mongoose = require("mongoose");
-import { cookies } from "next/headers";
+const jwt = require("jsonwebtoken");
 import connectToDatabase from "../../../connection/mongoConnect";
 import User from "../../../models/user";
+
+function generateAuthToken(newuser) {
+  try {
+    const token = jwt.sign(
+      {
+        _id: newuser._id,
+        name: newuser.username,
+        email: newuser.email,
+        messages: newuser.messages,
+      },
+      process.env.HASH_KEY
+    );
+    return token;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function POST(req) {
   const { email, otp } = await req.json();
@@ -11,14 +28,10 @@ export async function POST(req) {
 
   if (UserFound) {
     if (UserFound.otp === Number(otp)) {
-      cookies().set({
-        name: "user",
-        value: JSON.stringify(UserFound),
-        httpOnly: true,
-        path: "/",
-      });
+      const authToken = generateAuthToken(UserFound);
       return Response.json({
         Success: true,
+        AuthToken: authToken,
         user: UserFound,
         message: "OTP Verified",
       });

@@ -1,11 +1,26 @@
 "use server";
 const bcrypt = require("bcrypt");
-
-import { cookies } from "next/headers";
+const jwt = require("jsonwebtoken");
 import connectToDatabase from "../../../connection/mongoConnect";
 import User from "../../../models/user";
-
 const saltRounds = 10;
+
+function generateAuthToken(newuser) {
+  try {
+    const token = jwt.sign(
+      {
+        _id: newuser._id,
+        name: newuser.username,
+        email: newuser.email,
+        messages: newuser.messages,
+      },
+      process.env.HASH_KEY
+    );
+    return token;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function POST(req, res) {
   const { email, password } = await req.json();
@@ -22,15 +37,11 @@ export async function POST(req, res) {
     );
 
     if (checkEncryptedPassword == true) {
-      cookies().set({
-        name: "user",
-        value: JSON.stringify(emailFind),
-        httpOnly: true,
-        path: "/",
-      });
+      const authToken = generateAuthToken(emailFind);
+      console.log(authToken);
       return Response.json({
         Success: true,
-        user: emailFind,
+        AuthToken: authToken,
         msg: "Successfully Logged In",
       });
     } else {
