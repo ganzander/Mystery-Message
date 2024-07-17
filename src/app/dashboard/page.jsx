@@ -24,7 +24,7 @@ export default function page() {
 
   async function fetchAcceptMessages() {
     setIsSwitchLoading(true);
-    axios.post("/api/check-accept-message", authToken).then((result) => {
+    axios.post("/api/check-accept-message", { authToken }).then((result) => {
       if (result.data.Success === true) {
         setIsAccepting(result.data.msg);
       }
@@ -34,7 +34,7 @@ export default function page() {
 
   function fetchMessages() {
     setIsLoading(true);
-    axios.post("/api/get-messages", authToken).then((result) => {
+    axios.post("/api/get-messages", { authToken }).then((result) => {
       setMessages(result.data.userMessages || []);
     });
     setIsLoading(false);
@@ -42,17 +42,14 @@ export default function page() {
 
   async function changeAcceptMessage() {
     setIsLoading(true);
-    setIsSwitchLoading(false);
-    axios
-      .post("/api/accept-messages", { isAccepting, authToken })
-      .then((result) => {
-        if (result.data.Success === true) {
-          localStorage.setItem("AuthToken", result.data.AuthToken);
-          setAuthToken("result.data.AuthToken");
-        } else {
-          toast.error(result.data.msg);
-        }
-      });
+    axios.post("/api/accept-message", { authToken }).then((result) => {
+      if (result.data.Success === true) {
+        localStorage.setItem("AuthToken", JSON.stringify(result.data.token));
+        setAuthToken(result.data.token);
+      } else {
+        toast.error(result.data.msg);
+      }
+    });
     setIsLoading(false);
   }
 
@@ -69,7 +66,10 @@ export default function page() {
   }, []);
 
   useEffect(() => {
-    console.log(authToken);
+    if (authToken !== "") {
+      fetchAcceptMessages();
+      fetchMessages();
+    }
   }, [authToken]);
 
   function copyToClipboard() {
@@ -97,9 +97,8 @@ export default function page() {
 
         <div className="mb-4">
           <Switch
-            // {...register("isAccepting")}
             checked={isAccepting}
-            // onCheckedChange={handleSwitchChange}
+            onCheckedChange={changeAcceptMessage}
             disabled={isSwitchLoading}
           />
           <span className="ml-2">
@@ -124,13 +123,16 @@ export default function page() {
         </Button>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
           {messages.length > 0 ? (
-            messages.map((message, index) => (
-              <MessageCard
-                key={message._id}
-                message={message}
-                onMessageDelete={handleDeleteMessage}
-              />
-            ))
+            messages.map((message, index) => {
+              // console.log(message);
+              return (
+                <MessageCard
+                  key={index}
+                  message={message}
+                  onMessageDelete={handleDeleteMessage}
+                />
+              );
+            })
           ) : (
             <p>No messages to display.</p>
           )}

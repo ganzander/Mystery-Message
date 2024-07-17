@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 
 export async function POST(req) {
   const { authToken } = await req.json();
-  console.log(authToken);
-  if (!authToken) {
+
+  if (authToken === undefined) {
     return Response.json(
       { Success: false, msg: "Not Authenticated" },
       { status: 400 }

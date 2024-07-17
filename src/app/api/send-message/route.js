@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 import connectToDatabase from "../../../connection/mongoConnect";
 import User from "../../../models/user";
-import { cookies } from "next/headers";
 
 export async function POST(req) {
   const { username, content } = await req.json();
@@ -22,6 +21,7 @@ export async function POST(req) {
     }
 
     const newMessage = {
+      _id: new mongoose.Types.ObjectId(),
       content,
       createdAt: new Date(),
     };

@@ -4,13 +4,17 @@ import jwt from "jsonwebtoken";
 import Link from "next/link";
 
 export default function Navbar() {
-  const [decoded, setDecoded] = useState(null);
+  const [decoded, setDecoded] = useState({});
+  const [authToken, setAuthToken] = useState("");
 
   useEffect(() => {
-    const AuthToken = localStorage.getItem("AuthToken");
-    if (AuthToken) {
-      const decodedToken = jwt.decode(AuthToken);
-      setDecoded(decodedToken);
+    if (typeof window !== "undefined") {
+      const storedAuthToken = JSON.parse(localStorage.getItem("AuthToken"));
+      if (storedAuthToken) {
+        setAuthToken(storedAuthToken);
+        const decodedToken = jwt.decode(storedAuthToken);
+        setDecoded(decodedToken);
+      }
     }
   }, []);
 
@@ -22,9 +26,9 @@ export default function Navbar() {
         </a>
         {decoded ? (
           <>
-            <span className="mr-4">
+            <Link href="/dashboard" className="mr-4">
               Welcome, {decoded?.name || decoded?.email}
-            </span>
+            </Link>
             <button
               className="w-full md:w-auto"
               onClick={() => {

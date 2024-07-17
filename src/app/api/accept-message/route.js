@@ -23,21 +23,21 @@ function generateAuthToken(newuser) {
 }
 
 export async function POST(req) {
-  const { isAccepting, AuthToken } = await req.json();
-
-  if (!AuthToken) {
+  const { isAccepting, authToken } = await req.json();
+  if (authToken === undefined) {
     return Response.json(
       { Success: false, msg: "Not Authenticated" },
       { status: 400 }
     );
   } else {
-    const decodedToken = jwt.decode(AuthToken);
+    const decodedToken = jwt.decode(authToken);
     const query = { email: decodedToken.email };
     await User.updateOne(query, {
-      $set: { isAcceptingMessages: isAccepting },
+      $set: { isAcceptingMessages: !decodedToken.isAcceptingMessages },
     });
     const UserFound = await User.findOne(query);
     const token = generateAuthToken(UserFound);
+    console.log("Updated");
     return Response.json(
       { Success: true, msg: "Updated", token },
       { status: 200 }
