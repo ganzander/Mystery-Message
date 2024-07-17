@@ -1,20 +1,15 @@
 const mongoose = require("mongoose");
 import connectToDatabase from "../../../connection/mongoConnect";
 import User from "../../../models/user";
-import { cookies } from "next/headers";
+const jwt = require("jsonwebtoken");
 
-export async function GET(req) {
-  const userCookie = cookies().get("user");
-
-  if (!userCookie?.value) {
-    return Response.json(
-      { Success: false, msg: "Not Authenticated" },
-      { status: 401 }
-    );
+export async function POST(req) {
+  const { AuthToken } = await req.json();
+  if (!AuthToken) {
+    return Response.json({ msg: "Not Authenticated" }, { status: 400 });
   } else {
-    const userCookieValue = userCookie.value;
-    const user = JSON.parse(userCookieValue);
-    const query = { email: user.email };
+    const decodedToken = jwt.decode(AuthToken);
+    const query = { email: decodedToken.email };
     const UserFound = await User.findOne(query);
     const userMessages = UserFound.messages;
     return Response.json(

@@ -54,7 +54,10 @@ export default function LoginViaOTP() {
       axios.post("/api/checkOTP", { email, otp }).then((result) => {
         console.log(result);
         if (result.data.Success === true) {
-          localStorage.setItem("AuthToken", result.data.AuthToken);
+          localStorage.setItem(
+            "AuthToken",
+            JSON.stringify(result.data.AuthToken)
+          );
           router.push("/");
           toast.success(result.data.message);
         } else {

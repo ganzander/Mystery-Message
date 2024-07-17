@@ -13,6 +13,7 @@ function generateAuthToken(newuser) {
         name: newuser.username,
         email: newuser.email,
         messages: newuser.messages,
+        isAcceptingMessages: newuser.isAcceptingMessages,
       },
       process.env.HASH_KEY
     );

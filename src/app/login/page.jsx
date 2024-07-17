@@ -20,7 +20,10 @@ export default function Login() {
     } else {
       axios.post("/api/signin", { email, password }).then((result) => {
         if (result.data.Success === true) {
-          localStorage.setItem("AuthToken", result.data.AuthToken);
+          localStorage.setItem(
+            "AuthToken",
+            JSON.stringify(result.data.AuthToken)
+          );
           toast.success(result.data.msg);
           router.push("/");
         } else {
