@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import "../../assets/login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import Navbar from "src/components/Navbar";
 
 export default function Signup() {
   const router = useRouter();
@@ -71,6 +72,7 @@ export default function Signup() {
 
   return (
     <>
+      <Navbar />
       <div className="App">
         <div className="d-flex">
           <div className="overlay-container-left">

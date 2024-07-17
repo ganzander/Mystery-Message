@@ -11,7 +11,6 @@ function generateAuthToken(newuser) {
         _id: newuser._id,
         name: newuser.username,
         email: newuser.email,
-        messages: newuser.messages,
         isAcceptingMessages: newuser.isAcceptingMessages,
       },
       process.env.HASH_KEY

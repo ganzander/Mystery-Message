@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "../../assets/login.css";
+import Navbar from "src/components/Navbar";
 
 export default function Login() {
   const router = useRouter();
@@ -47,6 +48,7 @@ export default function Login() {
 
   return (
     <>
+      <Navbar />
       <div className="App">
         <div className="d-flex" style={{ height: "100%" }}>
           <div className="form-container-left sign-in-container">

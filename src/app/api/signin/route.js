@@ -12,7 +12,6 @@ function generateAuthToken(newuser) {
         _id: newuser._id,
         name: newuser.username,
         email: newuser.email,
-        messages: newuser.messages,
         isAcceptingMessages: newuser.isAcceptingMessages,
       },
       process.env.HASH_KEY
@@ -39,7 +38,6 @@ export async function POST(req, res) {
 
     if (checkEncryptedPassword == true) {
       const authToken = generateAuthToken(emailFind);
-      console.log(authToken);
       return Response.json({
         Success: true,
         AuthToken: authToken,

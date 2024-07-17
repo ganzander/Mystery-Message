@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "../../assets/login.css";
+import Navbar from "src/components/Navbar";
 
 export default function LoginViaOTP() {
   const router = useRouter();
@@ -69,6 +70,7 @@ export default function LoginViaOTP() {
 
   return (
     <>
+      <Navbar />
       <div className="App">
         <div>
           <div className="form-container-left sign-in-container">

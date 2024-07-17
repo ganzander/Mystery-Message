@@ -26,11 +26,17 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Button } from "./ui/button";
 
-export default function MessageCard({ message, onMessageDelete }) {
+export default function MessageCard({ message, onMessageDelete, authToken }) {
+  const messageId = message._id;
   async function handleDeleteConfirm() {
-    const response = await axios.delete(`api/delete-message/${message._id}`);
-    toast.success(response.data.message);
-    onMessageDelete(message._id);
+    axios
+      .post("/api/delete-message", { messageId, authToken })
+      .then((result) => {
+        if ((result.data.Success = true)) {
+          toast.success(result.data.msg);
+          onMessageDelete(messageId);
+        }
+      });
   }
 
   function formatTimestamp(timestamp) {
