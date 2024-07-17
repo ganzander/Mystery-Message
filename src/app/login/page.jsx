@@ -47,77 +47,70 @@ export default function Login() {
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="App">
-        <div className="d-flex" style={{ height: "100%" }}>
-          <div className="form-container-left sign-in-container">
-            <form onSubmit={handlePasswordSubmit} className="login-signup-form">
-              <h1 className="text-black text-3xl">Log in</h1>
-              {/* Sign in providers Not implemented  */}
-              {/* <div className="social-container">
-              <a href="#" className="social">
-                <i className="fab fa-facebook-f" />
-              </a>
-              <a href="#" className="social">
-                <i className="fab fa-google-plus-g" />
-              </a>
-              <a href="#" className="social">
-                <i className="fab fa-linkedin-in" />
-              </a>
-            </div> */}
-              <span>or use your account</span>
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={loginCredentials.email}
-                onChange={onChange}
-                autoComplete="off"
-              />
-              <small>ganeshmangla2003@gmail.com</small>
-
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={loginCredentials.password}
-                onChange={onChange}
-                autoComplete="off"
-              />
-
-              <small
-                className="linkForgotPassword text-center justify-content-center text-black mb-2"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  router.push("/loginOTP");
-                }}
-              >
-                Forgot Password
-              </small>
-              <button className="login-signup-button" type="submit">
-                Login
-              </button>
-            </form>
+    <div
+      className="container d-flex justify-content-center align-items-center min-vh-100 w-full"
+      style={{ backgroundColor: "#1a202c" }}
+    >
+      <div className="form-container bg-white p-5 rounded">
+        <h1 className="text-center">Welcome Back to True Feedback</h1>
+        <p className="text-center">
+          Sign in to continue your secret conversations
+        </p>
+        <form onSubmit={handlePasswordSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={loginCredentials.email}
+              onChange={onChange}
+              autoComplete="off"
+              required
+            />
           </div>
-
-          <div className="overlay-container">
-            <div className="overlay">
-              <div className="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
-                <button
-                  className="ghost login-signup-button "
-                  id="signUp"
-                  onClick={() => router.push("/signup")}
-                >
-                  Register
-                </button>
-              </div>
-            </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              name="password"
+              value={loginCredentials.password}
+              onChange={onChange}
+              autoComplete="off"
+              required
+            />
+            <small
+              className="linkForgotPassword text-center justify-content-center text-black mb-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/loginOTP");
+              }}
+            >
+              Forgot Password
+            </small>
           </div>
-        </div>
+          <button type="submit" className="btn btn-dark w-100">
+            Log In
+          </button>
+        </form>
+        <p className="text-center mt-3">
+          Not Registered?{" "}
+          <span
+            className="text-black"
+            style={{ cursor: "pointer" }}
+            onClick={() => router.push("/signup")}
+          >
+            Sign Up
+          </span>
+        </p>
       </div>
-    </>
+    </div>
   );
 }

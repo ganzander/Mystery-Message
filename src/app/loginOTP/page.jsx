@@ -69,73 +69,80 @@ export default function LoginViaOTP() {
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="App">
-        <div>
-          <div className="form-container-left sign-in-container">
-            {loginViaOTP && (
-              <form onSubmit={sendOTP} className="login-signup-form">
-                <h1 className="text-black text-3xl">Password Assistance</h1>
+    <div
+      className="container d-flex justify-content-center align-items-center min-vh-100"
+      style={{ backgroundColor: "#1a202c" }}
+    >
+      <div className="form-container bg-white p-5 rounded">
+        {loginViaOTP && (
+          <>
+            <h1 className="text-center">Password Assistance</h1>
+            <form onSubmit={sendOTP}>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
                 <input
                   type="email"
+                  className="form-control"
                   id="email"
-                  placeholder="Email"
                   name="email"
                   value={loginCredentials.email}
                   onChange={onChange}
                   autoComplete="off"
+                  required
                 />
-                <button className="login-signup-button " type="submit">
-                  Send OTP
-                </button>
-              </form>
-            )}
-            {enterOTP && (
-              <form onSubmit={verifyOTP} className="login-signup-form">
-                <h1 className="text-black text-3xl">Verification</h1>
+              </div>
+              <button type="submit" className="btn btn-dark w-100">
+                Send OTP
+              </button>
+            </form>
+          </>
+        )}
+        {enterOTP && (
+          <>
+            <h1 className="text-center">OTP Verification</h1>
+            <form onSubmit={verifyOTP}>
+              <div className="mb-3">
+                <label htmlFor="otp" className="form-label">
+                  OTP
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the OTP"
                   name="otp"
                   id="otp"
                   value={otp}
                   onChange={onOTPChange}
                   autoComplete="off"
                 />
-                <div className="d-flex justify-content-around">
-                  <button type="submit" className="me-3 login-signup-button ">
-                    Verify OTP
-                  </button>
-                  <button
-                    type="button"
-                    className="login-signup-button "
-                    onClick={sendOTP}
-                  >
-                    Resend OTP
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
-        <div className="overlay-container">
-          <div className="overlay">
-            <div className="overlay-panel overlay-right">
-              <h1>Hello, Friend!</h1>
-              <p>Enter your personal details and start journey with us</p>
-              <button
-                className="ghost login-signup-button "
-                id="signUp"
-                onClick={() => router.push("/signup")}
-              >
-                Register
-              </button>
-            </div>
-          </div>
-        </div>
+              </div>
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="btn btn-dark w-100 me-3">
+                  Verify OTP
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-dark w-100"
+                  onClick={sendOTP}
+                >
+                  Resend OTP
+                </button>
+              </div>
+            </form>
+          </>
+        )}
+        <p className="text-center mt-3">
+          Not Registered?{" "}
+          <span
+            className="text-black"
+            style={{ cursor: "pointer" }}
+            onClick={() => router.push("/signup")}
+          >
+            Sign Up
+          </span>
+        </p>
       </div>
-    </>
+    </div>
   );
 }

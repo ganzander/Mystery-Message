@@ -82,19 +82,17 @@ export default function page() {
     return (
       <>
         <Navbar />
-        <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
-          <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
+        <div className="p-6 bg-white rounded w-full m-0">
+          <h1 className="font-weight-bold mb-4">User Dashboard</h1>
 
           <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">
-              Copy Your Unique Link
-            </h2>
+            <h2 className="font-semibold mb-2">Copy Your Unique Link</h2>
             <div className="flex items-center">
               <input
                 type="text"
                 value={profileUrl}
                 disabled
-                className="input input-bordered w-full p-2 mr-2"
+                className="input w-full p-2 mr-2"
               />
               <Button onClick={copyToClipboard}>Copy</Button>
             </div>

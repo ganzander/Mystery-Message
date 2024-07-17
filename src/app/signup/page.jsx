@@ -71,79 +71,86 @@ export default function Signup() {
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="App">
-        <div className="d-flex">
-          <div className="overlay-container-left">
-            <div className="overlay">
-              <div className="overlay-panel overlay-left">
-                <h1>Welcome Back!</h1>
-                <p>
-                  To keep connected with us please login with your personal info
-                </p>
-                <button
-                  className="ghost login-signup-button "
-                  id="signIn"
-                  onClick={() => router.push("/login")}
-                >
-                  Log In
-                </button>
-              </div>
-            </div>
+    <div
+      className="container d-flex justify-content-center align-items-center min-vh-100"
+      style={{ backgroundColor: "#1a202c" }}
+    >
+      <div className="form-container bg-white p-5 rounded">
+        <h1 className="text-center">Join True Feedback</h1>
+        <p className="text-center">Sign up to start your anonymous adventure</p>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3 name-available-container">
+            <label htmlFor="username" className="form-label">
+              Username
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              name="name"
+              onChange={onChange}
+              value={credentials.name}
+              autoComplete="off"
+              required
+            />
+            <small>
+              {isAvailable ? (
+                <FontAwesomeIcon icon={faCheck} className="icon" />
+              ) : (
+                <FontAwesomeIcon icon={faXmark} className="icon" />
+              )}
+            </small>
           </div>
-          <div className="form-container-right sign-up-container">
-            <form onSubmit={handleSubmit} className="login-signup-form">
-              <h1 className="text-black text-3xl">Register</h1>
-              <div className="name-available-container">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  onChange={onChange}
-                  value={credentials.name}
-                  autoComplete="off"
-                />
-                <small>
-                  {isAvailable ? (
-                    <FontAwesomeIcon icon={faCheck} className="icon" />
-                  ) : (
-                    <FontAwesomeIcon icon={faXmark} className="icon" />
-                  )}
-                </small>
-              </div>
-
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={credentials.email}
-                onChange={onChange}
-                autoComplete="off"
-              />
-
-              <input
-                type={!passShow ? "password" : "text"}
-                placeholder="Password"
-                name="password"
-                value={credentials.password}
-                onChange={onChange}
-                autoComplete="off"
-              />
-
-              <button
-                className={
-                  isAvailable ? "login-signup-button" : "disable-button"
-                }
-                type="submit"
-                disabled={isAvailable ? false : true}
-              >
-                Submit
-              </button>
-            </form>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={credentials.email}
+              onChange={onChange}
+              autoComplete="off"
+              required
+            />
           </div>
-        </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type={!passShow ? "password" : "text"}
+              className="form-control"
+              id="password"
+              name="password"
+              value={credentials.password}
+              onChange={onChange}
+              autoComplete="off"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isAvailable ? false : true}
+            className="btn btn-dark w-100"
+          >
+            Sign Up
+          </button>
+        </form>
+        <p className="text-center mt-3">
+          Already a member?{" "}
+          <span
+            className="text-black"
+            style={{ cursor: "pointer" }}
+            onClick={() => router.push("/login")}
+          >
+            Log In
+          </span>
+        </p>
       </div>
-    </>
+    </div>
   );
 }

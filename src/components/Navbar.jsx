@@ -21,33 +21,69 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="p-4 md:p-6 shadow-md">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <Link href="/" className="text-xl font-bold mb-4 md:mb-0">
+    <nav
+      className="navbar navbar-expand-md shadow-sm py-5"
+      style={{ backgroundColor: "rgb(17 24 39)" }}
+    >
+      <div className="container">
+        <Link
+          href="/"
+          className="navbar-brand text-white"
+          style={{ textDecoration: "none" }}
+        >
           Mystery Message
         </Link>
-        {decoded.name !== undefined ? (
-          <>
-            <Link href="/dashboard" className="mr-4">
-              Welcome, {decoded?.name || decoded?.email}
-            </Link>
-            <button
-              className="w-full md:w-auto"
-              onClick={() => {
-                localStorage.removeItem("AuthToken");
-                window.location.reload();
-              }}
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <Link href="/login">
-              <button className="w-full md:w-auto">Login</button>
-            </Link>
-          </>
-        )}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            {decoded.name !== undefined && (
+              <li className="nav-item">
+                <span
+                  className="nav-link text-white"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => router.push("/dashboard")}
+                >
+                  Welcome, {decoded?.name || decoded?.email}
+                </span>
+              </li>
+            )}
+          </ul>
+          <ul className="navbar-nav ms-auto">
+            {decoded.name !== undefined ? (
+              <>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link text-white"
+                    onClick={() => {
+                      localStorage.removeItem("AuthToken");
+                      window.location.reload();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link href="/login">
+                    <button className="btn text-white">Login</button>
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );

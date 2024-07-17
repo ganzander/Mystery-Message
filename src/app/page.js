@@ -1,68 +1,60 @@
 "use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "../components/ui/button";
 import { Mail } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import Autoplay from "embla-carousel-autoplay";
 import messages from ".././messages.json";
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "../components/ui/carousel";
+import { Carousel } from "react-bootstrap";
 import Navbar from "src/components/Navbar";
+import "../assets/home.css";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex-grow flex flex-col items-center justify-center px-4 md:px-24 py-12 bg-gray-800 text-white">
-        <section className="text-center mb-8 md:mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold">
-            Dive into the World of Anonymous Feedback
-          </h1>
-          <p className="mt-3 md:mt-4 text-base md:text-lg">
-            True Feedback - Where your identity remains a secret.
-          </p>
-        </section>
+      <main
+        className="d-flex flex-column align-items-center justify-content-center px-4 text-white py-5"
+        style={{ backgroundColor: "#2d3748" }}
+      >
+        <div className="row text-center my-5">
+          <div className="col">
+            <h1 className="display-4 font-weight-bold">
+              Dive into the World of Anonymous Feedback
+            </h1>
+            <p className="lead">
+              True Feedback - Where your identity remains a secret.
+            </p>
+          </div>
+        </div>
 
-        <Carousel
-          plugins={[Autoplay({ delay: 2000 })]}
-          className="w-full max-w-lg md:max-w-xl"
-        >
-          <CarouselContent>
-            {messages.map((message, index) => (
-              <CarouselItem key={index} className="p-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{message.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex flex-col md:flex-row items-start space-y-2 md:space-y-0 md:space-x-4">
-                    <Mail className="flex-shrink-0" />
-                    <div>
-                      <p>{message.content}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {message.received}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+        <Carousel interval={2000} className="w-full max-w-lg max-w-md-xl">
+          {messages.map((message, index) => (
+            <Carousel.Item key={index} className="p-4">
+              <div className="card">
+                <div className="card-header">
+                  <h5 className="card-title">{message.title}</h5>
+                </div>
+                <div className="card-body d-flex flex-column flex-md-row align-items-start space-y-2 space-md-y-0 space-md-x-4">
+                  <Mail className="flex-shrink-0" />
+                  <div className="pl-3">
+                    <p>{message.content}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {message.received}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Carousel.Item>
+          ))}
         </Carousel>
       </main>
 
-      <footer className="text-center p-4 md:p-6 bg-gray-900 text-white">
-        © 2023 True Feedback. All rights reserved.
+      <footer
+        className="row py-4 mx-0"
+        style={{ backgroundColor: "rgb(17 24 39)" }}
+      >
+        <div className="col text-center">
+          <p className="text-white">
+            © 2023 True Feedback. All rights reserved.
+          </p>
+        </div>
       </footer>
     </>
   );
