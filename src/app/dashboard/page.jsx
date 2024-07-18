@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Button } from "src/components/ui/button";
-import { Switch } from "src/components/ui/switch";
-import { Separator } from "src/components/ui/separator";
-import { Loader2, RefreshCcw } from "lucide-react";
+
+import { RefreshCcw } from "lucide-react";
+import Switch from "react-switch";
+import { Spinner } from "react-bootstrap";
 import MessageCard from "src/components/MessageCard";
 import Navbar from "src/components/Navbar";
 
@@ -28,17 +28,17 @@ export default function page() {
     axios.post("/api/check-accept-message", { authToken }).then((result) => {
       if (result.data.Success === true) {
         setIsAccepting(result.data.msg);
+        setIsSwitchLoading(false);
       }
     });
-    setIsSwitchLoading(false);
   }
 
   function fetchMessages() {
     setIsLoading(true);
     axios.post("/api/get-messages", { authToken }).then((result) => {
       setMessages(result.data.userMessages || []);
+      setIsLoading(false);
     });
-    setIsLoading(false);
   }
 
   async function changeAcceptMessage() {
@@ -78,40 +78,54 @@ export default function page() {
     toast.success("Copied To Clipboard");
   }
 
+  console.log(isLoading);
+
   if (authToken !== null) {
     return (
       <>
         <Navbar />
-        <div className="p-6 bg-white rounded w-full m-0">
-          <h1 className="font-weight-bold mb-4">User Dashboard</h1>
-
+        <div className="container p-6 bg-white rounded w-100 mt-4">
+          <h1 className="font-weight-bold mb-4 text-center">User Dashboard</h1>
           <div className="mb-4">
-            <h2 className="font-semibold mb-2">Copy Your Unique Link</h2>
-            <div className="flex items-center">
+            <h3 className="font-weight-bold mb-3">Copy Your Unique Link</h3>
+            <div className="mb-3 d-flex">
               <input
                 type="text"
+                className="form-control me-5"
                 value={profileUrl}
                 disabled
-                className="input w-full p-2 mr-2"
               />
-              <Button onClick={copyToClipboard}>Copy</Button>
+              <button
+                variant="outline-secondary"
+                className="btn bg-dark text-white"
+                onClick={copyToClipboard}
+              >
+                Copy
+              </button>
             </div>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 d-flex">
             <Switch
+              className="me-3"
               checked={isAccepting}
-              onCheckedChange={changeAcceptMessage}
+              onChange={changeAcceptMessage}
               disabled={isSwitchLoading}
             />
             <span className="ml-2">
               Accept Messages: {isAccepting ? "On" : "Off"}
             </span>
           </div>
-          <Separator />
+          <hr
+            style={{
+              color: "black",
+              backgroundColor: "black",
+              height: 5,
+            }}
+          />
 
-          <Button
-            className="mt-4"
+          <button
+            className="mt-4 btn btn-outline-dark h-4 w-4"
             variant="outline"
             onClick={(e) => {
               e.preventDefault();
@@ -119,21 +133,28 @@ export default function page() {
             }}
           >
             {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Spinner
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
             ) : (
-              <RefreshCcw className="h-4 w-4" />
+              <RefreshCcw />
             )}
-          </Button>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+          </button>
+          <div className="mt-4 row">
             {messages.length > 0 ? (
               messages.map((message, index) => {
                 return (
-                  <MessageCard
-                    authToken={authToken}
-                    key={index}
-                    message={message}
-                    onMessageDelete={handleDeleteMessage}
-                  />
+                  <div className="col-12 col-md-6 mb-4" key={index}>
+                    <MessageCard
+                      authToken={authToken}
+                      key={index}
+                      message={message}
+                      onMessageDelete={handleDeleteMessage}
+                    />
+                  </div>
                 );
               })
             ) : (

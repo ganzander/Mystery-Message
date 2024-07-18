@@ -32,7 +32,7 @@ export default function Home() {
                   <h5 className="card-title">{message.title}</h5>
                 </div>
                 <div className="card-body d-flex flex-column flex-md-row align-items-start space-y-2 space-md-y-0 space-md-x-4">
-                  <Mail className="flex-shrink-0" />
+                  <Mail className="flex-shrink-0 me-4" />
                   <div className="pl-3">
                     <p>{message.content}</p>
                     <p className="text-xs text-muted-foreground">
