@@ -77,10 +77,20 @@ export default function page() {
     navigator.clipboard.writeText(profileUrl);
     toast.success("Copied To Clipboard");
   }
-
-  console.log(isLoading);
-
-  if (authToken !== null) {
+  console.log(authToken);
+  if (authToken === "") {
+    return (
+      <>
+        <Navbar />
+        <div className="container p-6 bg-white rounded w-100 mt-4">
+          <h1 className="font-weight-bold mb-4 text-center">
+            It seems you have not logged in yet!! <br />
+            Please Login
+          </h1>
+        </div>
+      </>
+    );
+  } else {
     return (
       <>
         <Navbar />
