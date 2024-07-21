@@ -60,7 +60,7 @@ export default function Dashboard() {
         setAuthToken(storedAuthToken);
         const decodedToken = jwt.decode(storedAuthToken);
         setDecoded(decodedToken);
-        setProfileUrl(`http://localhost:3000/u/${decodedToken.name}`);
+        setProfileUrl(`${location.origin}/u/${decodedToken.name}`);
       }
     }
   }, []);
@@ -76,7 +76,7 @@ export default function Dashboard() {
     navigator.clipboard.writeText(profileUrl);
     toast.success("Copied To Clipboard");
   }
-  console.log(authToken);
+
   if (authToken === "") {
     return (
       <>
