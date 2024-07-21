@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 import toast from "react-hot-toast";
-
 import { RefreshCcw } from "lucide-react";
 import Switch from "react-switch";
 import { Spinner } from "react-bootstrap";
 import MessageCard from "src/components/MessageCard";
 import Navbar from "src/components/Navbar";
 
-export default function page() {
+export default function Dashboard() {
   const [decoded, setDecoded] = useState({});
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
