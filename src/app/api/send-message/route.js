@@ -7,17 +7,14 @@ export async function POST(req) {
   try {
     const userFound = await User.findOne({ username });
     if (!userFound) {
-      return Response.json(
-        { Success: false, msg: "User not found" },
-        { status: 404 }
-      );
+      return Response.json({ Success: false, msg: "User not found" });
     }
 
     if (!userFound.isAcceptingMessages) {
-      return Response.json(
-        { Success: false, msg: "User is not accepting messages." },
-        { status: 403 }
-      );
+      return Response.json({
+        Success: false,
+        msg: "User is not accepting messages.",
+      });
     }
 
     const newMessage = {
@@ -33,10 +30,7 @@ export async function POST(req) {
       }
     );
 
-    return Response.json(
-      { Success: true, msg: "Message sent to user." },
-      { status: 200 }
-    );
+    return Response.json({ Success: true, msg: "Message sent to user." });
   } catch (error) {
     return Response.json({ Success: false, msg: error }, { status: 404 });
   }
