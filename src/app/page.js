@@ -1,11 +1,28 @@
 "use client";
 import { Mail } from "lucide-react";
-import messages from ".././messages.json";
 import { Carousel } from "react-bootstrap";
 import Navbar from "src/components/Navbar";
 import "../assets/home.css";
 
 export default function Home() {
+  const messages = [
+    {
+      title: "Message from Mystery User",
+      content: "Hey, how are you doing today?",
+      received: "10 minutes ago",
+    },
+    {
+      title: "Message from Mystery User",
+      content: "I really liked your recent post!",
+      received: "2 hours ago",
+    },
+    {
+      title: "Message from Mystery User",
+      content: "Do you have any book recommendations?",
+      received: "1 day ago",
+    },
+  ];
+
   return (
     <>
       <Navbar />
