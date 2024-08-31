@@ -70,7 +70,7 @@ export default function LoginViaOTP() {
 
   return (
     <div
-      className="container d-flex justify-content-center align-items-center min-vh-100"
+      className="d-flex justify-content-center align-items-center min-vh-100"
       style={{ backgroundColor: "#1a202c" }}
     >
       <div className="form-container bg-white p-5 rounded">

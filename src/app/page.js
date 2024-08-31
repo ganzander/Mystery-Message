@@ -16,10 +16,10 @@ export default function Home() {
         <div className="row text-center my-5">
           <div className="col">
             <h1 className="display-4 font-weight-bold">
-              Dive into the World of Anonymous Feedback
+              Dive into the World of WhisperGram
             </h1>
             <p className="lead">
-              True Feedback - Where your identity remains a secret.
+              WhisperGram - Where your identity remains a secret.
             </p>
           </div>
         </div>
@@ -51,9 +51,7 @@ export default function Home() {
         style={{ backgroundColor: "rgb(17 24 39)" }}
       >
         <div className="col text-center">
-          <p className="text-white">
-            © 2023 True Feedback. All rights reserved.
-          </p>
+          <p className="text-white">© 2024 WhisperGram. All rights reserved.</p>
         </div>
       </footer>
     </>

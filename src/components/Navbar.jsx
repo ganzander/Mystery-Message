@@ -31,7 +31,7 @@ export default function Navbar() {
           className="navbar-brand text-white"
           style={{ textDecoration: "none" }}
         >
-          Mystery Message
+          WhisperGram
         </Link>
         <button
           className="navbar-toggler"

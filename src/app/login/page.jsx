@@ -48,14 +48,12 @@ export default function Login() {
 
   return (
     <div
-      className="container d-flex justify-content-center align-items-center min-vh-100 w-full"
+      className="d-flex justify-content-center align-items-center min-vh-100"
       style={{ backgroundColor: "#1a202c" }}
     >
       <div className="form-container bg-white p-5 rounded">
-        <h1 className="text-center">Welcome Back to True Feedback</h1>
-        <p className="text-center">
-          Sign in to continue your secret conversations
-        </p>
+        <h1 className="text-center">Welcome Back to WhisperGram</h1>
+        <p className="text-center">Sign in to continue your secret whispers</p>
         <form onSubmit={handlePasswordSubmit}>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">

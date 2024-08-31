@@ -72,12 +72,14 @@ export default function Signup() {
 
   return (
     <div
-      className="container d-flex justify-content-center align-items-center min-vh-100"
+      className="d-flex justify-content-center align-items-center min-vh-100"
       style={{ backgroundColor: "#1a202c" }}
     >
       <div className="form-container bg-white p-5 rounded">
-        <h1 className="text-center">Join True Feedback</h1>
-        <p className="text-center">Sign up to start your anonymous adventure</p>
+        <h1 className="text-center">Join WhisperGram</h1>
+        <p className="text-center">
+          Sign up to start your whisperous adventure
+        </p>
         <form onSubmit={handleSubmit}>
           <div className="mb-3 name-available-container">
             <label htmlFor="username" className="form-label">
